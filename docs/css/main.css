@@ -1,0 +1,326 @@
+/* START OF @media screen */
+@media screen { 
+
+body{
+  margin:0;
+  padding:0;
+  background-color:rgba(255,255,255,1);
+  font-family:Raleway,sans-serif;
+  font-size:3vh;
+}
+
+#content{
+  margin:12vh;
+  margin-top:6vh;
+  will-change:scroll-position;
+}
+
+table{
+ margin-top:2vw;
+ margin-bottom:2vw;
+ margin-left:auto;
+ margin-right:auto;
+ border-collapse:collapse;
+}
+
+th{
+ margin:0;
+ padding:1vh;
+ border:2px solid #999;
+ background-color:#777;
+ color:#fff;
+}
+
+td{
+ margin:0;
+ padding:1vh;
+ border:2px solid #777;
+ background-color:#fff;
+ color:#000;
+}
+
+h1{
+  clear:both;
+  padding-left:0.5vw;
+  color:#555;
+  font-family:Julius Sans One, sans-serif;
+  font-style:normal;
+  font-weight:normal;
+  background: rgb(255,255,255);
+  background: linear-gradient(177deg, rgba(255,255,255,0) 0%, rgba(214,214,214,0.7) 100%);
+}
+
+h2{
+  clear:both;
+  font-family:Raleway;
+  font-weight:bold;
+  font-style:normal;
+}
+
+img{
+  display:block;
+  margin-top:4vh;
+  margin-bottom:4vh;
+  margin-left:auto;
+  margin-right:auto;
+  min-width:2vw;
+  max-width:40vw;
+  box-shadow: 9px 9px 12px 1px rgba(158,158,158,0.7);
+}
+
+/* NB: small logo floats left: */
+.small_logo{
+  display:block;
+  float:left;
+  margin-top:0;
+  margin-left:0;
+  margin-right:2vw;
+  margin-bottom:0.5vw;
+  width:9vw;
+  box-shadow:none;
+}
+
+/* custom_logo */
+/* This is currently set up for a wide horizontal logo: */ 
+.custom_logo{
+  display:block;
+  margin-top:0;
+  margin-left:0;
+  margin-right:2vw;
+  margin-bottom:0.5vw;
+  width:33vw;
+  box-shadow:none;
+}
+
+/* Hack for display issue with Katex:
+   The .katex-html class has aria-hidden='true'
+   but displays anyway (at least in Firefox) 
+   so we add this. This makes mathml appear
+   correctly in Firefox and Safari.
+*/
+.katex-html{
+ display:none;
+}
+
+/* Use Inconsolata for code blocks: */
+code{
+ font-family:Inconsolata;
+}
+
+p code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+li code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+/* Used for the Last updated line */
+.small{
+ margin:1px;
+ font-size:85%;
+ color:#999;
+}
+
+blockquote{
+ display:block;
+ font-style:italic;
+}
+
+p, h1, h2, h3, li{
+ /* transition: 0.3s background ease-in-out; */
+}
+
+p:hover, h1:hover, h2:hover, h3:hover, li:hover{
+ /* cursor:pointer; */
+ cursor:default;
+ background-image:url('../images/wavelet.svg');
+ background-repeat:no-repeat;
+ background-size:cover;
+ border-radius:7px;
+ background-position:center;
+}
+
+.nb{
+ color:#F40;
+ font-weight:bold;
+}
+
+.bc_grayed{
+ color:#9b9bcc;
+ font-style:italic;
+ font-size:90%;
+}
+
+.hb{
+ display:block;
+ width:5vw;
+ height:5vw;
+ background-image:url('../images/honeybee.svg');
+}
+
+.hbh{
+ display:inline-block;
+ width:5vh;
+ height:5vh;
+ transform:rotate(-45deg);
+ background-image:url('../images/honeybee.svg');
+ vertical-align:middle;
+}
+
+.hbh:hover{
+ animation:wiggle 0.1s ease-in-out infinite;
+}
+
+@keyframes wiggle{
+  from{ transform:rotate(-50deg); }
+  to{ transform:rotate(-40deg); }
+}
+
+.hb:hover{
+ animation:wiggle2 0.1s ease-in-out infinite;
+}
+
+@keyframes wiggle2{
+  from{ transform:rotate(-5deg); }
+  to{ transform:rotate(+5deg); }
+}
+
+} /* END OF @media screen */
+
+/* START OF @media print */
+@media print{
+
+body{
+  margin:0;
+  padding:0;
+  font-family:Raleway,sans-serif !important;
+  font-size:12em;
+}
+
+#access_bee{
+  display:none;
+}
+
+#content{
+  margin:12mm;
+  margin-top:6mm;
+}
+
+table{
+ margin-top:2vw;
+ margin-bottom:2vw;
+ margin-left:auto;
+ margin-right:auto;
+ border-collapse:collapse;
+}
+
+th{
+ margin:0;
+ padding:1vh;
+ border:2px solid #999;
+ background-color:#777;
+ color:#fff;
+}
+
+td{
+ margin:0;
+ padding:1vh;
+ border:2px solid #777;
+ background-color:#fff;
+ color:#000;
+}
+
+h1{
+  clear:both;
+  padding-left:0.5vw;
+  color:#555;
+  font-family:Julius Sans One, sans-serif;
+  font-style:normal;
+  font-weight:normal;
+  background: rgb(255,255,255);
+}
+
+h2{
+  clear:both;
+  font-family:Raleway;
+  font-weight:bold;
+  font-style:normal;
+}
+
+img{
+  display:block;
+  margin-top:4vh;
+  margin-bottom:4vh;
+  margin-left:auto;
+  margin-right:auto;
+  min-width:2vw;
+  max-width:40vw;
+  box-shadow: 9px 9px 12px 1px rgba(158,158,158,0.7);
+}
+
+.small_logo{
+  display:block;
+  float:left;
+  margin-top:0;
+  margin-left:0;
+  margin-right:2vw;
+  margin-bottom:0.5vw;
+  width:9vw;
+  box-shadow:none;
+}
+
+/* Hack for display issue with Katex:
+   The .katex-html class has aria-hidden='true'
+   but displays anyway (at least in Firefox) 
+   so we add this. This makes mathml appear
+   correctly in Firefox and Safari.
+*/
+.katex-html{
+ display:none;
+}
+
+/* Use Inconsolata for code blocks: */
+code{
+ font-family:Inconsolata;
+}
+
+p code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+li code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+/* Used for the Last updated line */
+.small{
+ margin:1px;
+ font-size:85%;
+ color:#999;
+}
+
+blockquote{
+ display:block;
+ font-style:italic;
+}
+
+.nb{
+ color:#F40;
+ font-weight:bold;
+}
+
+} /* END OF @media print */
+

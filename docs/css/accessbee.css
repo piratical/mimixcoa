@@ -1,0 +1,49 @@
+/*
+// accessbee.css
+*/
+
+/*
+   We are now using position:absolute
+   and javascript to work around
+   cross-browser issues with fixed and
+   sticky positioning:
+*/
+#access_bee{
+  position:absolute;
+  left:0;
+  top:120px;
+  z-index:1;
+  transition: opacity 300ms;
+}
+
+.fadeOut{
+  opacity:0;
+}
+
+.fadeIn{
+  opacity:100;
+}
+
+.accessbee_widget{
+  padding:0.5vh;
+  border:2px solid #aaa;
+  background:#efefef;
+  border-top-right-radius:2.5vh;
+  border-bottom-right-radius:2.5vh;
+  width:5vh;
+}
+
+.accessbee_icon{
+  display:block;
+  width:4vh;
+  height:4vh;
+  margin:0.5vh;
+  background:lightblue;
+  border-radius:2vh;
+  transition: background 0.3s ease-in-out;
+}
+
+.accessbee_icon:hover{
+  background:lightgreen;
+}
+

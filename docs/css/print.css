@@ -1,0 +1,131 @@
+/* START OF @media print */
+@media print{
+
+body{
+  margin:0;
+  padding:0;
+  font-family:Raleway,sans-serif !important;
+  font-size:12em;
+}
+
+#access_bee{
+  display:none;
+}
+
+#content{
+  margin:12mm;
+  margin-top:6mm;
+}
+
+table{
+ margin-top:2vw;
+ margin-bottom:2vw;
+ margin-left:auto;
+ margin-right:auto;
+ border-collapse:collapse;
+}
+
+th{
+ margin:0;
+ padding:1vh;
+ border:2px solid #999;
+ background-color:#777;
+ color:#fff;
+}
+
+td{
+ margin:0;
+ padding:1vh;
+ border:2px solid #777;
+ background-color:#fff;
+ color:#000;
+}
+
+h1{
+  clear:both;
+  padding-left:0.5vw;
+  color:#555;
+  font-family:Julius Sans One, sans-serif;
+  font-style:normal;
+  font-weight:normal;
+  background: rgb(255,255,255);
+}
+
+h2{
+  clear:both;
+  font-family:Raleway;
+  font-weight:bold;
+  font-style:normal;
+}
+
+img{
+  display:block;
+  margin-top:4vh;
+  margin-bottom:4vh;
+  margin-left:auto;
+  margin-right:auto;
+  min-width:2vw;
+  max-width:40vw;
+  box-shadow: 9px 9px 12px 1px rgba(158,158,158,0.7);
+}
+
+.small_logo{
+  display:block;
+  float:left;
+  margin-top:0;
+  margin-left:0;
+  margin-right:2vw;
+  margin-bottom:0.5vw;
+  width:9vw;
+  box-shadow:none;
+}
+
+/* Hack for display issue with Katex:
+   The .katex-html class has aria-hidden='true'
+   but displays anyway (at least in Firefox) 
+   so we add this. This makes mathml appear
+   correctly in Firefox and Safari.
+*/
+.katex-html{
+ display:none;
+}
+
+/* Use Inconsolata for code blocks: */
+code{
+ font-family:Inconsolata;
+}
+
+p code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+li code{
+ font-size:110%;
+ /* color:#1A631F; green */
+ /* the following is a blue: */
+ color:#005d96;
+}
+
+/* Used for the Last updated line */
+.small{
+ margin:1px;
+ font-size:85%;
+ color:#999;
+}
+
+blockquote{
+ display:block;
+ font-style:italic;
+}
+
+.nb{
+ color:#F40;
+ font-weight:bold;
+}
+
+} /* END OF @media print */
+
+
