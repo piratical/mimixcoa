@@ -512,7 +512,8 @@ function index(req,res,next){
   allFiles.forEach(file=>{
     // Discard files we don't want to list on the 
     // index page:
-    if(file.name.match(/^\.|\.(css|js|jpeg|jpg|png|svg)$/)){
+    // old: if(file.name.match(/^\.|\.(css|js|jpeg|jpg|png|svg)$/)){
+    if(file.name.match(/^\..*|^.*\.(css|js|jpeg|jpg|png|svg|mp3|mp4)$/)){
       return;
     }
     // Check if we need to print a new subheader:
