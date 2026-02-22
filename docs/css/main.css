@@ -92,16 +92,6 @@ img{
   box-shadow:none;
 }
 
-/* Hack for display issue with Katex:
-   The .katex-html class has aria-hidden='true'
-   but displays anyway (at least in Firefox) 
-   so we add this. This makes mathml appear
-   correctly in Firefox and Safari.
-*/
-.katex-html{
- display:none;
-}
-
 /* Use Inconsolata for code blocks: */
 code{
  font-family:Inconsolata;

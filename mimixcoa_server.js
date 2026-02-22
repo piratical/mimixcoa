@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////
+//////////////////////////////////////////////////
 //
 // server.js
 //
@@ -21,7 +21,6 @@ const url           = require('url');
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const showdown      = require('showdown');
-const showdownKatex = require('showdown-katex');
 //const bcrypt        = require('bcrypt');
 
 /////////////////////////////////////////////
@@ -37,52 +36,23 @@ const mdConverter = new showdown.Converter({
   simplifiedAutoLink:true,
   excludeTrailingPunctuationFromURLs:true,
   ghCodeBlocks:true,
-  tasklists:true,
-  extensions:[
-    showdownKatex({
-      displayMode: true,
-      throwOnError: false, // false: allows katex to fail silently
-      errorColor: '#ff0000',
-      delimiters: [
-        { left: "$", right: "$", display: false },
-        { left: '~', right: '~', display: false, asciimath: true },
-      ],
-    })
-
-  ]
+  tasklists:true
 });
 
 // >>> CHOOSE ONE: >>>
 // PG OR PG-NATIVE
 // PG-NATIVE MAY BE MORE PERFORMANT FOR PRODUCTION:
-const {Pool,Client} = require('pg');
+//const {Pool,Client} = require('pg');
 //const {Pool,Client} = require('pg').native;
-
-/////////////////////////////////////////////
-//
-// ElasticSearch testing:
-//
-/////////////////////////////////////////////
-//const elasticSearch = require('elasticsearch');
-
-// Instantiate elasticSearch client:
-//const elasticSearchClient = new elasticSearch.Client({
-//hosts: [ 'http://localhost:9200']
-//});
-
-// Try pinging the client:
-//elasticSearchClient.ping({ requestTimeout: 30000 } , function(error){
-//  if(error){
-//    console.error('Sorry, cannot connect to Elasticsearch.');
-//  }else{
-//    console.log('Connection to Elasticsearch was successful!');
-//  }
-//});
 
 ///////////////////////////////////////
 //
 // SSL STUFF NEEDED FOR HTTPS:
-// IN HOUSE SERVER:
+// IN HOUSE SERVER: 
+// USUALLY WE DON'T USE THIS:
+// WE PLACE THE NODE.JS SERVER
+// BEHIND AN NGINX PROXY SERVER
+// INSTEAD ...
 //
 ///////////////////////////////////////
 const sslCertDir  = './test_certs/public/';
@@ -90,7 +60,7 @@ const sslPrivDir  = './test_certs/private/';
 const privKeyFile = sslPrivDir+'test.key';
 const publKeyFile = sslCertDir+'test.crt';
 const domainName  = 'localhost';
-
+//
 //const privateKey    = fs.readFileSync( privKeyFile , 'utf8');
 //const certificate   = fs.readFileSync( publKeyFile , 'utf8');
 //const credentials   = {key: privateKey, cert: certificate, maxSockets:25 };
@@ -102,7 +72,7 @@ const domainName  = 'localhost';
 //////////////////////////////////////////////////////////////
 
 // Postgres pool:
-const pool = new Pool();
+//const pool = new Pool();
 
 // Express server app:
 var app = express();
@@ -110,64 +80,16 @@ var app = express();
 // trust proxy:
 app.set('trust proxy',true);
 
+// Accept JSON with UTF-8
+app.use(express.json({ charset: 'utf-8' }));
+// Accept URL-encoded forms with UTF-8
+app.use(express.urlencoded({ extended: true, charset: 'utf-8' }));
+
 //
 // Test bodyParser too:
 //
 app.use(bodyParser.json());
 
-///////////////////////////////////////
-//
-// checkSyntax
-//
-///////////////////////////////////////
-function checkSyntax(req,res,next){
-  const sql = req.body.data;
-  //console.log('Calling checkSyntax...');
-  //console.log(sql);
-  const pre  = 'DO $SYNTAX_CHECK$ BEGIN RETURN;';
-  const post = 'END; $SYNTAX_CHECK$;';
-
-  const test = `${pre}${sql}${post}`;
-
-  pool.query( test , (pgError,pgResponse)=>{
-    console.log(pgError);
-    if(pgError){
-      const result = {};
-      result.result  = 'ERROR';
-      // We handle a few different types of errors (probably not exhaustively, btw):
-      const matched1 = pgError.stack.match(/error: (syntax error at or near "(.*)")/);
-      const matched2 = pgError.stack.match(/error: (syntax error at end of input)/);
-      const matched3 = pgError.stack.match(/Error: getaddrinfo ENOTFOUND/);
-      if(matched1){
-        result.message = matched1[1];
-        result.near    = matched1[2];
-        result.position= pgError.position-pre.length;
-      }else if(matched2){
-        result.message = matched2[1];
-        result.near    = "";
-        result.position= pgError.position-pre.length;
-      }else if(matched3){
-        result.message = 'Error: Unable to reach database server. Please check VPN or network connection.';
-        result.near    = "";
-        result.position=0;
-      }else{
-        // This is a "catch all" section for unclassified cases:
-        result.message = pgError.stack;
-        result.near="";
-        result.position=0;
-      }
-      res.send(JSON.stringify(result));
-
-    }else{
-      // DEBUG: 
-      if(pgResponse.command==='DO' && pgResponse.rowCount===null){
-        res.send('{"result":"OK"}');
-      }else{
-        res.send('{"result":"?"}'); // <= Should not get here ever
-      }
-    }
-  });
-}
 
 ///////////////////////////////////////////
 //
@@ -226,7 +148,27 @@ function makeHtmlHeader(title,lastUpdated,unnesting=''){
   <link rel='stylesheet' href='${unnesting}css/accessbee.css'>
   <!-- JAVASCRIPT (NB: SOME JS FILES ARE IN FOOTER) -->
   <!-- <script src = "https://d3js.org/d3.v4.min.js" defer></script> -->
-  <script src="https://fred-wang.github.io/mathjax.js/mpadded-min.js"></script>
+  <!-- <script src="https://fred-wang.github.io/mathjax.js/mpadded-min.js"></script> -->
+  <!-- KATEX SUPPORT: -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.css" integrity="sha384-Wsr4Nh3yrvMf2KCebJchRJoVo1gTU6kcP05uRSh5NV3sj9+a8IomuJoQzf3sMq4T" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.js" integrity="sha384-+W9OcrYK2/bD7BmUAk+xeFAyKp0QjyRQUCxeU31dfyTt/FrPsUgaBTLLkVf33qWt" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+  </script>
   <!-- FONTS -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Gentium+Basic:400,400i,700,700i&display=swap" rel="stylesheet">
@@ -621,7 +563,9 @@ function handleMarkdown(req,res,next){
       // Show index page:
       index(req,res,next);
     }else if(req.path.match(/\.md$/)){
-      const fullPath = '.' + req.baseUrl + req.path;
+      let fullPath = '.' + req.baseUrl + req.path;
+      fullPath = decodeURI(fullPath);
+      
       if(fs.existsSync(fullPath)){
         // We want to know the last update date:
         const stats = fs.statSync(fullPath);
@@ -745,3 +689,4 @@ app.get('/', function(req, res) {
 
 // PRODUCTION SERVER:
 httpServer.listen(3000);
+

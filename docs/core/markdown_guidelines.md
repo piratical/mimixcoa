@@ -8,16 +8,17 @@ Markdown provides a simple way for people to write documents in a human-readable
 that can be translated by software into well-formatted, typographically-pleasing 
 documents in HTML, PDF or other digital formats.
 
-Mixcoatl uses:
+On the server side, Mimixcoa uses:
 
   * [Showdown](http://showdownjs.com/) to support *Github Flavored Markdown* (GFM).
   * [Prism](https://prismjs.com/) for syntax highlighting of code blocks. Currently
     we include syntax grammars for at least C, C++, HTML, Javascript, Java, Python, 
     React, SQL and Typescript.
-  * [Showdown-katex](https://github.com/obedm503/showdown-katex), 
-    [Katex](https://katex.org/) 
-    and [MathJax](https://www.mathjax.org/) to support cross-browser `MathML` 
-    equation display using your choice of Latex or ASCII math syntax.
+
+On the browser side, Mimixcoa now uses:
+
+  * [Katex](https://katex.org/) to render **LaTeX** and **ASCIIMath** for
+    the display of mathematical equations.
 
 This document provides an overview of Markdown syntax that you can use to
 create documents on this document server. If you need more information,
@@ -301,18 +302,17 @@ This requires that you use an `HTML` snippet, for example:
 Math Equations
 --------------
 
-As of this writing (2021.03.18), `MathML` mathematical 
-equations will render natively in **Firefox** and **Safari**.
-For **Microsoft Edge, Google Chrome, Opera**, and **Brave** browsers,
-we have included the `MathJax` javascript polyfill to handle the
-rendering. 
+For writing mathematical equations, you can use either **LaTeX** or **ASCIIMath** syntax.
+Of these two, LaTeX is much more powerful, but ASCIIMath can be used for simple things.
 
-Math equations can be written using either ASCIImath or Latex syntax.
+Math equations can be written either inline or in a block display manner, as follows:
 
 Inline Equations
 ----------------
 
-Inline equations are delimited with dollar signs, "`$`":
+Inline equations can be delimited with dollar signs "`$`". The KaTeX Javascript processor
+looks for a dollar sign at both the beginning and the end of 
+the inline mathematical expression:
 
 ```markdown
 Inline math equations look like this: $\omega = d\phi / dt$. 
@@ -322,42 +322,44 @@ Another inline equation that everyone knows is $E=mc^2$.
 
 *result:*
 
-Inline math equations look like this: $\omega = d\phi / dt$. 
+Inline math equations look like this: $\omega = d\phi / dt$
 
 Another inline equation that everyone knows is $E=mc^2$.
 
-Display Equations
------------------
+Math Equations in Block Display
+-------------------------------
 
-Note that you can mark the code block to indicate whether
-you are using Latex or asciimath:
+To display a mathematical equation in a stand-alone block,
+use _two dollar signs_, "`$$`" at both the beginning and
+end of the block:
 
 ```markdown
 Latex:
 
-​`​`​`​latex
+$$
 I = \int \rho R^{2} dV
-​`​`​`​
+$$
 
 ASCII math:
 
-​`​`​`​asciimath
+$$
 x = (-b +- sqrt(b^2-4ac)) / (2a)
-​`​`​`​
+$$
 ```
 
 *result:*
 
 Latex:
 
-```latex
+$$
 I = \int \rho R^{2} dV
-```
+$$
+
 ASCII math:
 
-```asciimath
+$$
 x = (-b +- sqrt(b^2-4ac)) / (2a)
-```
+$$
 
 ## Unicode
 

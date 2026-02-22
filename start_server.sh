@@ -14,7 +14,8 @@ PGPASSWORD=
 PGDATABASE=
 PGPORT=
 ENV=/usr/bin/env
-CMD=/usr/local/bin/node
+#CMD=/usr/local/bin/node
+CMD=/opt/homebrew/bin/node
 APP=mimixcoa_server.js
 COMMAND="$ENV PGUSER=$PGUSER PGHOST=$PGHOST PGPASSWORD=$PGPASSWORD PGDATABASE=$PGDATABASE PGPORT=$PGPORT $CMD $APP"
 
