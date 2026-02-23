@@ -486,6 +486,9 @@ Conclusion
 
 Markdown provides simplicity for everyday tasks, but you still
 have access to the full power of modern HTML5 technologies when
-you need them. Simplicity and power is a good combination.
+you need them. In addition, Mimixcoa also includes KaTeX primarily
+for rendering mathematical equations and other things that 
+are easier to do in LaTeX but hard to do in HTML or Markdown.
+Simplicity and power is a good combination.
 Have fun!
 
