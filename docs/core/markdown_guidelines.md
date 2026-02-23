@@ -39,6 +39,7 @@ Contents
   * [Math Equations](#mathequations)
   * [Inline Equations](#inlineequations)
   * [Display Equations](#displayequations)
+  * [Working around equation typesetting issues caused by the Markdown processor](#workingaroundequationtypesettingissuescausedbythemarkdownprocessor)
   * [Unicode](#unicode)
   * [HTML5 Snippets](#html5snippets)
   * [Conclusion](#conclusion)
@@ -307,8 +308,7 @@ Of these two, LaTeX is much more powerful, but ASCIIMath can be used for simple 
 
 Math equations can be written either inline or in a block display manner, as follows:
 
-Inline Equations
-----------------
+###Inline Equations
 
 Inline equations can be delimited with dollar signs "`$`". The KaTeX Javascript processor
 looks for a dollar sign at both the beginning and the end of 
@@ -326,8 +326,7 @@ Inline math equations look like this: $\omega = d\phi / dt$
 
 Another inline equation that everyone knows is $E=mc^2$.
 
-Math Equations in Block Display
--------------------------------
+###Math Equations in Block Display
 
 To display a mathematical equation in a stand-alone block,
 use _two dollar signs_, "`$$`" at both the beginning and
@@ -360,6 +359,62 @@ ASCII math:
 $$
 x = (-b +- sqrt(b^2-4ac)) / (2a)
 $$
+
+###Working around equation typesetting issues caused by the Markdown processor
+
+In LaTeX, the underscore character, "`_`", is used as a subscript operator.
+For example, typing "`$v_1$`" in your markdown document 
+(using the inline KaTeX "`$`" dollar sign delimiters) 
+will trigger KaTeX to render this as "$v_1$" (that is, lowercase letter *v* with a subscripted numeral *1*).
+
+However, bugs occur if you just happen to have _two_ underscore characters appearing within your mathematical
+expression. For example, suppose you want to write an integral going from *v₁* to *v₂* using perfectly good
+LaTeX code:
+
+```markdown
+$$
+\int_{v_1}^{v_2}
+$$
+```
+
+... which of course you expect to render as:
+
+<div>
+$$
+\int_{v_1}^{v_2}
+$$
+</div>
+
+... but what you actually get is a garbage rendering on your page like this:
+
+`$$ \int{v1}^{v_2} $$`
+
+What went wrong? Notice how the *first two underscores have disappeared*. This is a clue!
+The Markdown processor sees a string delimited by two underscore characters and tries to *italicize* that
+content ... and this causes KaTeX —which processes content *after* the Markdown processor— to fail.
+
+To get around this "conflict" between Markdown and KaTeX, just wrap your equation in an HTML "`<div>`"
+element, like this:
+
+```markdown
+<div>
+ $$
+  \int_{w_1}^{w_2}
+ $$
+</div>
+```
+
+... and _viola!_:
+
+<div>
+ $$
+  \int_{w_1}^{w_2}
+ $$
+</div>
+
+This works because the Markdown processor knows that it should ignore HTML fragments inserted into a Markdown document
+and just let the browser render those unmodified. KaTeX, which only runs after the Markdown processor has finished,
+can now render LaTeX properly.
 
 ## Unicode
 
