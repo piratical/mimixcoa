@@ -426,7 +426,7 @@ You have many options at your disposal:
   * [Emojipedia.org](https://emojipedia.org/) is an easy way to cut-and-paste
     emoji.
   * [Unifont.org's Key Curry](https://unifont.org/keycurry/) is a web
-    application with numerous keyboard maps and input method engines (IME)
+    application with numerous keyboard maps and input method engines (IMEs)
     that you can use to type foreign scripts, currency symbols, IPA symbols
     and numerous other symbols present in Unicode.
 
